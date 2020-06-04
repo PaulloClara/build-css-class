@@ -1,0 +1,22 @@
+{
+  "name": "build-css-class",
+  "version": "1.0.0",
+  "description": "Simple css class builder/injector",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paulloclara/build-css-class.git"
+  },
+  "keywords": [
+    "build",
+    "css",
+    "class",
+    "inject-css-class"
+  ],
+  "author": "PaulloClara <https://github.com/paulloclara>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/paulloclara/build-css-class/issues"
+  },
+  "homepage": "https://github.com/paulloclara/build-css-class#readme"
+}
