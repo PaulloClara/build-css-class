@@ -1,7 +1,15 @@
 "use strict";
 
 function isObject(arg) {
-  return typeof arg === "object";
+  return typeof arg === "object" && arg !== null && !isArray(arg);
+}
+
+function isArray(arg) {
+  return Array.isArray(arg);
+}
+
+function isString(arg) {
+  return typeof arg === "string";
 }
 
 function getObjectKeys(object) {
@@ -16,22 +24,25 @@ function normalizeArgs(args) {
         bccKeys: args[0].bccKeys || getObjectKeys(args[0].bccSource)
       }
     : {
-        bccInitial: args[0] || "",
-        bccSource: args[1] || {},
-        bccKeys: args[2] || getObjectKeys(args[1])
+        bccInitial: isString(args[0]) && args[0] ? args[0] : "",
+        bccSource: isObject(args[1]) && args[1] ? args[1] : {},
+        bccKeys: isArray(args[2]) && args[2] ? args[2] : getObjectKeys(args[1])
       };
 }
 
-// bccInitial: string, bccSource: object, bccKeys: array | optional
-// { bccInitial: string | optional, bccSource: object, bccKeys: array | optional }
-
 module.exports = (...args) => {
-  const { bccInitial, bccSource, bccKeys } = normalizeArgs(args);
+  try {
+    const { bccInitial, bccSource, bccKeys } = normalizeArgs(args);
 
-  return bccKeys
-    .reduce(
-      (cssClass, key) => (bccSource[key] ? `${cssClass} ${key}` : cssClass),
-      bccInitial
-    )
-    .trim();
+    return bccKeys
+      .reduce(
+        (cssClass, key) => (bccSource[key] ? `${cssClass} ${key}` : cssClass),
+        bccInitial
+      )
+      .trim();
+  } catch (err) {
+    console.error(err);
+
+    return "";
+  }
 };
